@@ -40,7 +40,7 @@ public class MemberService {
     //@RequiredArgsConstructor 선언으로  final로 필드에 선언 만으로 주입
     private final MemberRepository memberRepository;
 
-    
+
     /*
      *회원가입
      */
