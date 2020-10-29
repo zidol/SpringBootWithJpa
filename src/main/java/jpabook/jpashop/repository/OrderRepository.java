@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class OrderReposiotry {
+public class OrderRepository {
 
     private final EntityManager em;
 
