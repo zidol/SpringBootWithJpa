@@ -72,7 +72,10 @@ public class ItemController {
 //        book.setAuthor(form.getAuthor());
 //        book.setIsbn(form.getIsbn());
 //        itemService.saveItem(book); //merge 보단 dirty checking (변경감지)로 구현
-        itemService.updateItem(itemId, form.getName(), form.getPrice(), form.getStockQuantity(), form.getAuthor(), form.getIsbn());
+        System.out.println("form id : " + form.getId() );
+        System.out.println("pathvariable : " + itemId);
+//        Book findItem = (Book) itemService.findOne(form.getId());
+        itemService.changeBook(form);
         return "redirect:/items";
     }
 }

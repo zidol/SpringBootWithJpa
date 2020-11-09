@@ -1,5 +1,6 @@
 package jpabook.jpashop.service;
 
+import jpabook.jpashop.controller.BookForm;
 import jpabook.jpashop.domain.item.Book;
 import jpabook.jpashop.domain.item.Item;
 import jpabook.jpashop.repository.ItemRepository;
@@ -21,15 +22,15 @@ public class ItemService {
         itemRepository.save(item);
     }
 
-    @Transactional
-    public void updateItem(Long itemId, String name, int price, int stockQuantity, String author, String isbn) {
-        Book findItem = (Book)itemRepository.findOne(itemId); //영속 상태 .@Transactional로 인해 commit 하고 jpa는 flush 함으로 변경감지(더티체킹)으로 update 됨
-        findItem.setName(name);
-        findItem.setPrice(price);            // setter 보단 findItem.change(param.getPrice(), param.getName())같은 로직으로
-        findItem.setStockQuantity(stockQuantity);
-        findItem.setAuthor(author);
-        findItem.setIsbn(isbn);
-    }
+//    @Transactional
+//    public void updateItem(Long itemId, String name, int price, int stockQuantity, String author, String isbn) {
+//        Book findItem = (Book)itemRepository.findOne(itemId); //영속 상태 .@Transactional로 인해 commit 하고 jpa는 flush 함으로 변경감지(더티체킹)으로 update 됨
+//        findItem.setName(name);
+//        findItem.setPrice(price);            // setter 보단 findItem.change(param.getPrice(), param.getName())같은 로직으로
+//        findItem.setStockQuantity(stockQuantity);
+//        findItem.setAuthor(author);
+//        findItem.setIsbn(isbn);
+//    }
 
     public List<Item> findItems() {
         return itemRepository.findAll();
@@ -37,5 +38,11 @@ public class ItemService {
 
     public Item findOne(Long itemId) {
         return itemRepository.findOne(itemId);
+    }
+
+    @Transactional
+    public void changeBook(BookForm form) {
+        Book findItem = (Book)itemRepository.findOne(form.getId());
+        findItem.changeBook(form);
     }
 }
