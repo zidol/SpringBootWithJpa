@@ -39,10 +39,19 @@ public class OrderApiController {
     @GetMapping("/api/v2/orders")
     public List<OrderDto> orderV2() {
         List<Order> orders = orderRepository.findAllByString(new OrderSearch());
-        List<OrderDto> collect = orders.stream()
+        List<OrderDto> result = orders.stream()
                 .map(o -> new OrderDto(o))
                 .collect(Collectors.toList());
-        return collect;
+        return result;
+    }
+
+    @GetMapping("/api/v3/orders")
+    public List<OrderDto> orderV3() {
+         List<Order> orders = orderRepository.findAllWithItem();
+        List<OrderDto> result = orders.stream()
+                .map(o -> new OrderDto(o))
+                .collect(Collectors.toList());
+        return result;
     }
 
     @Getter
@@ -64,18 +73,17 @@ public class OrderApiController {
                     .map(orderItem -> new OrderItemDto(orderItem))
                     .collect(Collectors.toList());
         }
+    }
+    @Getter
+    static class OrderItemDto {
+        private String itemName;
+        private int orderPrice;
+        private int count;
 
-        @Getter
-        static class OrderItemDto {
-            private String itemName;
-            private int orderPrice;
-            private int count;
-
-            public OrderItemDto(OrderItem orderItem) {
-                itemName = orderItem.getItem().getName();
-                orderPrice = orderItem.getOrderPrice();
-                count = orderItem.getCount();
-            }
+        public OrderItemDto(OrderItem orderItem) {
+            itemName = orderItem.getItem().getName();
+            orderPrice = orderItem.getOrderPrice();
+            count = orderItem.getCount();
         }
-     }
+    }
 }
